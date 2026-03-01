@@ -36,8 +36,6 @@ app.add_middleware(
 
 app.include_router(api_router)
 
-uploads_dir = Path(settings.UPLOAD_DIR)
-uploads_dir.mkdir(parents=True, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=str(uploads_dir)), name="uploads")
 
 
@@ -49,7 +47,8 @@ def health_check():
 @app.on_event("startup")
 async def on_startup():
     """Démarre le scheduler et initialise les données de base en mode DEBUG."""
-
+    uploads_dir = Path(settings.UPLOAD_DIR)
+    uploads_dir.mkdir(parents=True, exist_ok=True)
     # Scheduler APScheduler
     from app.services.scheduler_service import start_scheduler
     start_scheduler()
