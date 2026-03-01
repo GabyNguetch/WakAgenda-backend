@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environnement virtuel
+venv/
+.venv/
+env/
+ENV/
+
+# Variables d'environnement (NE JAMAIS COMMITER)
+.env
+
+# Uploads (photos de profil)
+uploads/
+
+# Alembic versions générées (garder les fichiers .py mais pas les .pyc)
+alembic/versions/__pycache__/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS
+.DS_Store
+Thumbs.db
