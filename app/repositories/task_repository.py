@@ -118,9 +118,13 @@ class TaskRepository:
         for s in TaskStatus:
             by_status[s.value] = sum(1 for t in all_tasks if t.status == s)
 
+        # MODIFICATION pour by_domain : Compter dynamiquement les chaînes
         by_domain = {}
-        for d in EventDomain:
-            by_domain[d.value] = sum(1 for t in all_tasks if t.domain == d)
+        for t in all_tasks:
+            # On utilise le texte brut stocké en base
+            d_name = t.domain 
+            # On incrémente le compteur pour ce nom de domaine
+            by_domain[d_name] = by_domain.get(d_name, 0) + 1
 
         return TaskStats(
             total=total,

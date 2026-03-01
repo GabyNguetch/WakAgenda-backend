@@ -65,10 +65,8 @@ class Task(Base):
         Enum(EventCategory, name="event_category"),
         nullable=False, default=EventCategory.OTHER
     )
-    domain: Mapped[EventDomain] = mapped_column(
-        Enum(EventDomain, name="event_domain"),
-        nullable=False, default=EventDomain.TECHNICAL
-    )
+    # MODIFICATION ICI : Remplacez l'Enum par String
+    domain: Mapped[str] = mapped_column(String(100), nullable=False) 
     status: Mapped[TaskStatus] = mapped_column(
         Enum(TaskStatus, name="task_status"),
         nullable=False, default=TaskStatus.TODO

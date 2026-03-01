@@ -39,6 +39,9 @@ def upgrade() -> None:
     )
     op.create_index(op.f("ix_task_comments_id"),      "task_comments", ["id"],      unique=False)
     op.create_index(op.f("ix_task_comments_task_id"), "task_comments", ["task_id"], unique=True)
+    op.execute("ALTER TABLE tasks ALTER COLUMN domain TYPE VARCHAR(100) USING domain::varchar")
+    # 2. Supprimer l'ancien type Enum de la base de données (ménage)
+    op.execute("DROP TYPE IF EXISTS event_domain")
 
 
 def downgrade() -> None:

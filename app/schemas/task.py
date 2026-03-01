@@ -20,7 +20,7 @@ class TaskCreate(BaseModel):
     start_time: time
     end_time: time
     category: EventCategory = EventCategory.OTHER
-    domain: EventDomain = EventDomain.TECHNICAL
+    domain: str = "Technique"   
     status: TaskStatus = TaskStatus.TODO
     reminder: Optional[ReminderDelay] = None
     notification_enabled: bool = True
@@ -43,7 +43,7 @@ class TaskUpdate(BaseModel):
     start_time: Optional[time] = None
     end_time: Optional[time] = None
     category: Optional[EventCategory] = None
-    domain: Optional[EventDomain] = None
+    domain: Optional[str] = None
     status: Optional[TaskStatus] = None
     reminder: Optional[ReminderDelay] = None
     notification_enabled: Optional[bool] = None
@@ -62,7 +62,7 @@ class TaskResponse(BaseModel):
     start_time: time
     end_time: time
     category: EventCategory
-    domain: EventDomain
+    domain: str  # C'était EventDomain
     status: TaskStatus
     reminder: Optional[ReminderDelay]
     notification_enabled: bool
@@ -75,7 +75,7 @@ class TaskResponse(BaseModel):
 
 class TaskFilters(BaseModel):
     category: Optional[EventCategory] = None
-    domain: Optional[EventDomain] = None
+    domain: Optional[str] = None
     status: Optional[TaskStatus] = None
     date_from: Optional[date] = None
     date_to: Optional[date] = None
