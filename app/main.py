@@ -12,6 +12,9 @@ from fastapi.staticfiles import StaticFiles
 from app.core.config import settings
 from app.api.v1.router import api_router
 
+# 1. Définir le chemin globalement pour éviter la NameError
+UPLOADS_PATH = Path(settings.UPLOAD_DIR)
+
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
@@ -36,7 +39,10 @@ app.add_middleware(
 
 app.include_router(api_router)
 
-app.mount("/uploads", StaticFiles(directory=str(uploads_dir)), name="uploads")
+# 2. Utiliser la variable globale UPLOADS_PATH ici
+# On s'assure que le dossier existe dès le chargement pour éviter une erreur de StaticFiles
+UPLOADS_PATH.mkdir(parents=True, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=str(UPLOADS_PATH)), name="uploads")
 
 
 @app.get("/health", tags=["Health"], summary="État du serveur")
