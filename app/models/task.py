@@ -124,4 +124,13 @@ class Task(Base):
     def effective_domain_name(self) -> str:
         if self.custom_domain is not None:
             return self.custom_domain.name
-        return self.domain.value
+
+        # 2. Colonne VARCHAR directe
+        if self.domain:
+            # Garde-fou rétrocompatibilité : au cas où SQLAlchemy
+            # renverrait encore un objet Enum en cache
+            if hasattr(self.domain, "value"):
+                return str(self.domain.value)
+            return str(self.domain)
+
+        return "Non défini"
