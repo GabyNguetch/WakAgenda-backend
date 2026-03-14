@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440  # 24h
 
     # CORS
-    ALLOWED_ORIGINS: str = "http://localhost:3000","https://wakagenda-admin.vercel.app/", "https://wak-agenda.vercel.app/"
+    ALLOWED_ORIGINS: str = "http://localhost:3000, https://wakagenda-admin.vercel.app/, https://wak-agenda.vercel.app/"
 
     # Upload
     UPLOAD_DIR:         str = "uploads"
