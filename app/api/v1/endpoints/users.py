@@ -1,9 +1,11 @@
 """
-app/api/v1/endpoints/users.py
-Routes : profil utilisateur courant + upload photo.
+app/api/v1/endpoints/users.py  ← FICHIER MODIFIÉ
+Routes : profil utilisateur courant + upload photo + liste de tous les utilisateurs (← NEW).
 """
 
 import uuid
+from typing import List
+
 from fastapi import APIRouter, Depends, UploadFile, File, status
 from sqlalchemy.orm import Session
 
@@ -38,6 +40,25 @@ def get_user_by_id(
 ):
     """Retourne le profil d'un utilisateur par son UUID."""
     return UserService(db).get_by_id(user_id)
+
+# ── Fonctionnalité 3 — Liste de tous les utilisateurs ────────────────────────
+@router.get(
+    "",
+    response_model=List[UserResponse],
+    summary="Liste de tous les utilisateurs (admin)",
+)
+def get_all_users(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Retourne la liste de tous les utilisateurs enregistrés.
+    Le champ hashed_password n'est jamais exposé (exclu par UserResponse).
+    Tous les utilisateurs authentifiés peuvent accéder à cet endpoint.
+    """
+    users = db.query(User).order_by(User.created_at.desc()).all()
+    return [UserResponse.model_validate(u) for u in users]
+
 
 
 @router.patch(
