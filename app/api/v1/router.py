@@ -27,6 +27,7 @@ from app.api.v1.endpoints import (
     reports_tf_docx,     # ← NEW  Rapport technico-fonctionnel DOCX
     export_import,       # ← NEW  Export/Import CSV
     broadcast,           # ← NEW  Broadcast email
+    backup,
 )
 
 api_router = APIRouter(prefix="/api/v1")
@@ -47,3 +48,4 @@ api_router.include_router(reports_weekly.router)   # ← NEW
 api_router.include_router(reports_tf_docx.router)  # ← NEW
 api_router.include_router(export_import.router)    # ← NEW  (pas de prefix, routes /export et /import)
 api_router.include_router(broadcast.router)        # ← NEW
+api_router.include_router(backup.router)   # /api/v1/backup/export  et  /api/v1/backup/import
